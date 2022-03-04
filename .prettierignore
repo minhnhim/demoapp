@@ -1,0 +1,12 @@
+package.json
+package-lock.json
+.eslintrc.js
+public
+amplify/backend/function/OnmoAuthTriggers/src
+amplify/team-provider-info.json
+amplify/backend/backend-config.json
+*-cloudformation-template.json
+.serverless
+serverless/OnmoResolver/build
+.build
+coverage/

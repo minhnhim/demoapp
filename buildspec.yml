@@ -1,0 +1,14 @@
+version: 0.1
+phases:
+  pre_build:
+    commands:
+      - |
+        echo "------------------------------------------"
+        echo "Build ${CODEBUILD_BUILD_NUMBER} --  ${CODEBUILD_WEBHOOK_TRIGGER}"
+        echo "Hash $CODEBUILD_RESOLVED_SOURCE_VERSION"
+        echo "------------------------------------------"
+      - npm ci --unsafe-perm
+  build:
+    commands:
+      - npm run cq
+      - CI=true npm test

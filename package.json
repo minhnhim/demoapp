@@ -1,0 +1,79 @@
+{
+  "name": "stealth-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "husky": "4.3.6",
+    "jest": "26.6.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "2.2.0",
+    "pretty-quick": "3.1.0",
+    "shx": "^0.3.3"
+  },
+  "scripts": {
+    "clean:amplify:OnmoAuthTriggers": "shx rm -rf amplify/backend/function/OnmoAuthTriggers/node_modules",
+    "clean:amplify": "npm-run-all --parallel clean:amplify:*",
+    "clean:serverless:OnmoResolver": "shx rm -rf serverless/OnmoResolver/node_modules",
+    "clean:serverless:OnmoSingaporeSync": "shx rm -rf serverless/OnmoSingaporeSync/node_modules",
+    "clean:serverless": "npm-run-all --parallel clean:serverless:*",
+    "clean": "npm-run-all --parallel clean:*",
+    "postclean": "shx rm -rf node_modules/",
+    "cq": "npm-run-all --sequential cq:format cq:lint",
+    "cq:format:amplify:OnmoAuthTriggers": "prettier -c amplify/backend/function/OnmoAuthTriggers",
+    "cq:format:amplify": "npm-run-all --parallel cq:format:amplify:*",
+    "cq:format:serverless:OnmoResolver": "prettier -c serverless/OnmoResolver",
+    "cq:format:serverless:OnmoSingaporeSync": "prettier -c serverless/OnmoSingaporeSync",
+    "cq:format:serverless": "npm-run-all --parallel cq:format:serverless:*",
+    "cq:format": "npm-run-all --parallel cq:format:*",
+    "cq:lint:amplify:OnmoAuthTriggers": "echo 'TODO: run eslint'",
+    "cq:lint:amplify": "npm-run-all --parallel cq:lint:amplify:*",
+    "cq:lint:serverless:OnmoResolver": "eslint serverless/OnmoResolver",
+    "cq:lint:serverless:OnmoSingaporeSync": "eslint serverless/OnmoSingaporeSync",
+    "cq:lint:serverless": "npm-run-all --parallel cq:lint:serverless:*",
+    "cq:lint": "npm-run-all --parallel cq:lint:*",
+    "pre-commit:amplify:OnmoAuthTriggers": "pretty-quick amplify/backend/function/OnmoAuthTriggers --staged --no-restage --bail",
+    "pre-commit:amplify": "npm-run-all --parallel --continue-on-error pre-commit:amplify:*",
+    "pre-commit:serverless:OnmoResolver": "pretty-quick serverless/OnmoResolver --staged --no-restage --bail",
+    "pre-commit:serverless:OnmoSingaporeSync": "pretty-quick serverless/OnmoSingaporeSync --staged --no-restage --bail",
+    "pre-commit:serverless": "npm-run-all --parallel --continue-on-error pre-commit:serverless:*",
+    "pre-commit": "npm-run-all --parallel --continue-on-error pre-commit:* && npm run cq:lint",
+    "postinstall": "npm-run-all --parallel install:*",
+    "install:amplify:OnmoAuthTriggers": "cd amplify/backend/function/OnmoAuthTriggers && npm ci",
+    "install:amplify": "npm-run-all --parallel install:amplify:*",
+    "install:serverless:OnmoResolver": "cd serverless/OnmoResolver && npm ci",
+    "install:serverless:OnmoSingaporeSync": "cd serverless/OnmoSingaporeSync && npm ci",
+    "install:serverless": "npm-run-all --parallel install:serverless:*",
+    "test": "npm-run-all --sequential --continue-on-error test:unit test:integration test:legacy",
+    "test:legacy": "npm-run-all --sequential --continue-on-error test:legacy:*",
+    "test:legacy:OnmoResolver": "npm run --prefix serverless/OnmoResolver test:legacy -- --silent --no-verbose --ci",
+    "test:integration": "npm-run-all --sequential --continue-on-error test:integration:*",
+    "test:integration:OnmoResolver": "npm run --prefix serverless/OnmoResolver test:integration -- --silent --no-verbose --ci",
+    "test:unit": "npm-run-all --sequential --continue-on-error test:unit:*",
+    "test:unit:OnmoAuthTriggers": "npm run --prefix amplify/backend/function/OnmoAuthTriggers test:unit -- --silent --no-verbose --ci",
+    "test:unit:OnmoResolver": "npm run --prefix serverless/OnmoResolver test:unit -- --silent --no-verbose --ci",
+    "test:cleanup": "npm-run-all --parallel test:cleanup:*",
+    "test:cleanup:OnmoResolver": "npm run --prefix serverless/OnmoResolver test:cleanup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/B2tGame/stealth-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/B2tGame/stealth-backend/issues"
+  },
+  "homepage": "https://github.com/B2tGame/stealth-backend#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
+  },
+  "dependencies": {
+    "serverless-pseudo-parameters": "^2.5.0",
+    "uuid": "^8.3.2"
+  }
+}
